@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Models Sustainability Feedback</title>
+    <style>
+        :root {
+            --brand-color-1: #B1591E;
+            --brand-color-2: #8A5764;
+            --brand-color-3: #DDB176;
+            --brand-color-4: #006269;
+            --brand-color-5: #A5C9CA;
+            --brand-color-6: #634B7B;
+            --light-grey: #F0EDE9;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-grey);
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--brand-color-4);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        h1, h2, h3 {
+            color: var(--brand-color-1);
+        }
+        
+        .intro {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .design-decision {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .option {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid var(--brand-color-5);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            background-color: var(--brand-color-5);
+            color: var(--brand-color-4);
+        }
+        
+        .option.selected {
+            background-color: var(--brand-color-4);
+            color: white;
+            border-color: var(--brand-color-4);
+        }
+        
+        .asurite-section {
+            background-color: white;
+            border-radius: 8px;
+            margin: 30px 0;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid var(--brand-color-5);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: var(--brand-color-1);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        button:hover {
+            background-color: var(--brand-color-2);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--light-grey);
+            border-radius: 5px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--brand-color-3);
+            transition: width 0.3s ease;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        @media (max-width: 768px) {
+            .option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AI Models Sustainability Guide Feedback</h1>
+            <p>Help us improve our sustainability guide by providing your feedback on design decisions</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>Welcome to our Feedback Form</h2>
+            <p>We're working to improve our AI Models Sustainability Guide and would love your input on key design decisions. Please review each option and select the one you prefer.</p>
+            <p>Your feedback will help us create a more effective and user-friendly resource for understanding AI model sustainability practices.</p>
+            <div class="progress-bar">
+                <div class="progress" id="progress-indicator" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <!-- Design Decision 1: Energy Consumption Visualization -->
+        <div class="design-decision" id="decision1">
+            <h3>Decision 1: Energy Consumption Visualization</h3>
+            <p>How would you prefer to see energy consumption data visualized?</p>
+            <div class="options">
+                <div class="option" data-value="Charts" data-question="1" onclick="selectOption(this)">
+                    <h4>Interactive Charts</h4>
+                    <p>Colorful, interactive charts showing energy consumption patterns with hover effects for detailed information.</p>
+                </div>
+                <div class="option" data-value="Dashboards" data-question="1" onclick="selectOption(this)">
+                    <h4>Comprehensive Dashboards</h4>
+                    <p>Complete dashboards with multiple metrics displayed simultaneously for comparative analysis.</p>
+                </div>
+                <div class="option" data-value="Simple Metrics" data-question="1" onclick="selectOption(this)">
+                    <h4>Simple Metric Cards</h4>
+                    <p>Clean, minimalist cards highlighting key metrics with simple color-coding for efficiency levels.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Design Decision 2: User Interface Layout -->
+        <div class="design-decision hidden" id="decision2">
+            <h3>Decision 2: User Interface Layout</h3>
+            <p>Which layout would you find most effective for navigating sustainability information?</p>
+            <div class="options">
+                <div class="option" data-value="Side Navigation" data-question="2" onclick="selectOption(this)">
+                    <h4>Side Navigation</h4>
+                    <p>Persistent side menu with expandable categories for quick access to different sections.</p>
+                </div>
+                <div class="option" data-value="Card Grid" data-question="2" onclick="selectOption(this)">
+                    <h4>Card Grid Layout</h4>
+                    <p>Grid of cards representing different sustainability topics that expand when clicked.</p>
+                </div>
+                <div class="option" data-value="Vertical Scrolling" data-question="2" onclick="selectOption(this)">
+                    <h4>Vertical Scrolling</h4>
+                    <p>Single-page vertical scrolling with anchor links and progressive disclosure of information.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Design Decision 3: Carbon Footprint Reporting -->
+        <div class="design-decision hidden" id="decision3">
+            <h3>Decision 3: Carbon Footprint Reporting</h3>
+            <p>How would you prefer to track and report carbon footprint metrics?</p>
+            <div class="options">
+                <div class="option" data-value="Real-time" data-question="3" onclick="selectOption(this)">
+                    <h4>Real-time Monitoring</h4>
+                    <p>Live updates showing carbon emissions as they occur with trend indicators.</p>
+                </div>
+                <div class="option" data-value="Comparative" data-question="3" onclick="selectOption(this)">
+                    <h4>Comparative Analysis</h4>
+                    <p>Side-by-side comparisons of different models and their environmental impact over time.</p>
+                </div>
+                <div class="option" data-value="Periodic" data-question="3" onclick="selectOption(this)">
+                    <h4>Periodic Reports</h4>
+                    <p>Detailed weekly/monthly reports with actionable insights and optimization recommendations.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Design Decision 4: Resource Optimization Tools -->
+        <div class="design-decision hidden" id="decision4">
+            <h3>Decision 4: Resource Optimization Tools</h3>
+            <p>Which resource optimization tools would you find most valuable?</p>
+            <div class="options">
+                <div class="option" data-value="AutoScaling" data-question="4" onclick="selectOption(this)">
+                    <h4>Automatic Scaling</h4>
+                    <p>Tools that automatically adjust resource allocation based on current processing demands.</p>
+                </div>
+                <div class="option" data-value="Recommendations" data-question="4" onclick="selectOption(this)">
+                    <h4>Recommendation Engine</h4>
+                    <p>AI-powered suggestions for optimizing resource usage based on historical patterns.</p>
+                </div>
+                <div class="option" data-value="Manual" data-question="4" onclick="selectOption(this)">
+                    <h4>Manual Controls</h4>
+                    <p>Detailed manual controls with presets for different use cases and deployment scenarios.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Design Decision 5: Data Visualization Preferences -->
+        <div class="design-decision hidden" id="decision5">
+            <h3>Decision 5: Data Visualization Preferences</h3>
+            <p>Which data visualization approach would be most helpful for understanding AI model sustainability impacts?</p>
+            <div class="options">
+                <div class="option" data-value="Interactive Comparisons" data-question="5" onclick="selectOption(this)">
+                    <h4>Interactive Comparisons</h4>
+                    <p>Side-by-side interactive charts that allow direct comparison between different models and parameters.</p>
+                </div>
+                <div class="option" data-value="Timeline Views" data-question="5" onclick="selectOption(this)">
+                    <h4>Timeline Views</h4>
+                    <p>Chronological visualizations showing changes in sustainability metrics over time.</p>
+                </div>
+                <div class="option" data-value="Impact Heatmaps" data-question="5" onclick="selectOption(this)">
+                    <h4>Impact Heatmaps</h4>
+                    <p>Color-coded heatmaps highlighting areas of highest environmental impact across your AI deployment.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ASURITE ID Collection -->
+        <div class="design-decision hidden" id="asurite-section">
+            <h3>Final Step: Your ASURITE ID</h3>
+            <p>Please enter your ASURITE ID to complete the submission:</p>
+            <input type="text" id="asurite-input" placeholder="Enter your ASURITE ID">
+            <button id="submit-button" onclick="submitForm()">Submit Feedback</button>
+            <div class="feedback hidden" id="feedback-message"></div>
+        </div>
+        
+        <!-- Hidden form that will be submitted to Google Forms -->
+        <form id="google-form" class="hidden" method="POST" target="_blank">
+            <!-- Form fields will be populated via JavaScript -->
+        </form>
+    </div>
+    
+    <script>
+        // Configuration with actual Google Form details
+        const formConfig = {
+            formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScy9IPKZwrlJRE2VStcyQhZfJxQE-10oVrJyV6y1OPh-Pfirw/formResponse", 
+            fields: {
+                asuriteId: "entry.350607834",
+                decision1: "entry.362548823",
+                decision2: "entry.704231267",
+                decision3: "entry.1177052475", 
+                decision4: "entry.1960760649",
+                decision5: "entry.1145567293"
+            }
+        };
+        
+        // Track selected options and current decision
+        const userSelections = {
+            decision1: null,
+            decision2: null,
+            decision3: null,
+            decision4: null,
+            decision5: null,
+            asuriteId: null
+        };
+        
+        let currentDecision = 1;
+        const totalDecisions = 5;
+        
+        // Function to select an option
+        function selectOption(element) {
+            // Remove selected class from all siblings
+            const options = element.parentElement.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            
+            // Add selected class to clicked element
+            element.classList.add('selected');
+            
+            // Save selection
+            const questionNumber = element.dataset.question;
+            const value = element.dataset.value;
+            userSelections[`decision${questionNumber}`] = value;
+            
+            // After a short delay, move to the next decision
+            setTimeout(() => {
+                moveToNextDecision();
+            }, 500);
+        }
+        
+        // Function to move to next decision
+        function moveToNextDecision() {
+            // Hide current decision
+            document.getElementById(`decision${currentDecision}`).classList.add('hidden');
+            
+            // Update progress bar
+            updateProgress();
+            
+            // Move to next decision or show ASURITE input
+            currentDecision++;
+            if (currentDecision <= totalDecisions) {
+                document.getElementById(`decision${currentDecision}`).classList.remove('hidden');
+            } else {
+                document.getElementById('asurite-section').classList.remove('hidden');
+            }
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercent = (currentDecision / totalDecisions) * 100;
+            document.getElementById('progress-indicator').style.width = `${progressPercent}%`;
+        }
+        
+        // Function to submit form
+        function submitForm() {
+            const asuriteId = document.getElementById('asurite-input').value.trim();
+            
+            if (!asuriteId) {
+                showFeedback("Please enter your ASURITE ID", false);
+                return;
+            }
+            
+            userSelections.asuriteId = asuriteId;
+            
+            // Create Google Form
+            const googleForm = document.getElementById('google-form');
+            googleForm.action = formConfig.formUrl;
+            
+            // Clear any existing form fields
+            googleForm.innerHTML = '';
+            
+            // Add form fields and values
+            for (const [decision, value] of Object.entries(userSelections)) {
+                if (value) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = formConfig.fields[decision];
+                    input.value = value;
+                    googleForm.appendChild(input);
+                }
+            }
+            
+            // Submit the form
+            try {
+                googleForm.submit();
+                showFeedback("Thank you for your feedback! Your responses have been submitted.", true);
+                
+                // Reset form after successful submission
+                setTimeout(() => {
+                    resetForm();
+                }, 3000);
+            } catch (error) {
+                showFeedback("There was an error submitting your feedback. Please try again.", false);
+                console.error("Form submission error:", error);
+            }
+        }
+        
+        // Show feedback message
+        function showFeedback(message, isSuccess) {
+            const feedbackElement = document.getElementById('feedback-message');
+            feedbackElement.textContent = message;
+            feedbackElement.classList.remove('hidden', 'success', 'error');
+            feedbackElement.classList.add(isSuccess ? 'success' : 'error');
+            
+            // Hide feedback after 5 seconds
+            setTimeout(() => {
+                feedbackElement.classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Reset form to initial state
+        function resetForm() {
+            // Reset selections
+            Object.keys(userSelections).forEach(key => {
+                userSelections[key] = null;
+            });
+            
+            // Clear selected options
+            document.querySelectorAll('.option.selected').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Reset ASURITE input
+            document.getElementById('asurite-input').value = '';
+            
+            // Hide all decisions except the first
+            for (let i = 2; i <= totalDecisions; i++) {
+                document.getElementById(`decision${i}`).classList.add('hidden');
+            }
+            document.getElementById('asurite-section').classList.add('hidden');
+            
+            // Show first decision
+            document.getElementById('decision1').classList.remove('hidden');
+            
+            // Reset current decision and progress
+            currentDecision = 1;
+            updateProgress();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
