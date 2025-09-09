@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model User Experience Feedback</title>
+    <style>
+        :root {
+            --brand-color-1: #B1591E;
+            --brand-color-2: #8A5764;
+            --brand-color-3: #DDB176;
+            --brand-color-4: #006269;
+            --brand-color-5: #A5C9CA;
+            --brand-color-6: #634B7B;
+            --light-grey: #F0EDE9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--brand-color-5) 0%, var(--brand-color-4) 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: var(--brand-color-1);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .scenario {
+            margin: 50px 0;
+            padding: 30px;
+            border: 2px solid #e8f4fd;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #fafbfc, var(--light-grey));
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .scenario h2 {
+            color: var(--brand-color-1);
+            margin-top: 0;
+            font-size: 1.5em;
+            border-bottom: 2px solid var(--brand-color-5);
+            padding-bottom: 10px;
+        }
+        .model-comparison {
+            display: flex;
+            gap: 25px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        .model-card {
+            flex: 1;
+            min-width: 280px;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .model-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--brand-color-1), var(--brand-color-3));
+        }
+        .model-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--brand-color-4);
+            margin-bottom: 15px;
+        }
+        .sustainability-rating {
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .leaves-3 { 
+            background: linear-gradient(135deg, #c8e6c9, #a5d6a7); 
+            color: #1b5e20; 
+            border: 2px solid #4caf50;
+        }
+        .leaves-2 { 
+            background: linear-gradient(135deg, #dcedc8, #c5e1a5); 
+            color: #33691e; 
+            border: 2px solid #8bc34a;
+        }
+        .leaves-1 { 
+            background: linear-gradient(135deg, #f0f4c3, #e6ee9c); 
+            color: #827717; 
+            border: 2px solid #cddc39;
+        }
+        .leaves-0 { 
+            background: linear-gradient(135deg, #ffcdd2, #ef9a9a); 
+            color: #b71c1c; 
+            border: 2px solid #f44336;
+        }
+        
+        .model-details {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .model-details strong {
+            color: var(--brand-color-6);
+        }
+        .performance-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--brand-color-3);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .new-badge {
+            background: var(--brand-color-1);
+        }
+        .popular-badge {
+            background: var(--brand-color-6);
+        }
+
+        /* Form styling */
+        .feedback-form {
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--brand-color-5);
+        }
+        .feedback-form h2 {
+            color: var(--brand-color-1);
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--brand-color-5);
+            padding-bottom: 10px;
+        }
+        .form-question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: var(--light-grey);
+            border-radius: 8px;
+        }
+        .form-question h3 {
+            color: var(--brand-color-4);
+            margin-top: 0;
+        }
+        .radio-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.2s ease;
+        }
+        .radio-option:hover {
+            background: var(--brand-color-5);
+        }
+        .radio-option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--brand-color-4);
+        }
+        .radio-option label {
+            cursor: pointer;
+            font-size: 16px;
+            flex: 1;
+        }
+        .asurite-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid var(--brand-color-5);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, var(--brand-color-4), var(--brand-color-6));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--brand-color-6), var(--brand-color-4));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        .feedback-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 AI Model User Experience Feedback</h1>
+        <div class="subtitle">Help us improve your experience with AI models by providing feedback</div>
+        
+        <!-- Scenario 1 - Question 1 (2 options) -->
+        <div class="scenario">
+            <h2>High-Performance Reasoning Models</h2>
+            
+            <div class="model-comparison">
+                <div class="model-card">
+                    <div class="performance-badge">High Performance</div>
+                    <div class="model-name">o3</div>
+                    <div class="sustainability-rating leaves-1">🌱 1 leaf</div>
+                    <div class="model-details">
+                        <strong>Capabilities:</strong> Advanced reasoning, complex problem solving<br>
+                        <strong>Energy Impact:</strong> >33 Wh per long prompt (≈7k words)<br>
+                        <strong>Best for:</strong> Complex analysis, mathematical reasoning
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="performance-badge">Eco-Optimized</div>
+                    <div class="model-name">Claude 3.7 Sonnet</div>
+                    <div class="sustainability-rating leaves-3">🌱🌱🌱 3 leaves</div>
+                    <div class="model-details">
+                        <strong>Capabilities:</strong> Balanced performance and efficiency<br>
+                        <strong>Energy Impact:</strong> Ranked highest eco-efficiency in benchmarks<br>
+                        <strong>Best for:</strong> General tasks with sustainability priority
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-question">
+                <h3>Question 1: Which model's presentation do you prefer?</h3>
+                <div class="radio-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option1" name="q1" value="o3">
+                        <label for="q1_option1">o3 - High Performance Model</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option2" name="q1" value="claude">
+                        <label for="q1_option2">Claude 3.7 Sonnet - Eco-Optimized Model</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario 2 - Question 2 (2 options) -->
+        <div class="scenario">
+            <h2>Familiar vs. Transparent Options</h2>
+            
+            <div class="model-comparison">
+                <div class="model-card">
+                    <div class="performance-badge popular-badge">Popular Choice</div>
+                    <div class="model-name">Claude 4 Sonnet</div>
+                    <div class="sustainability-rating leaves-0">🚫 0 leaves</div>
+                    <div class="model-details">
+                        <strong>Availability:</strong> Widely used, proven performance<br>
+                        <strong>Sustainability Data:</strong> Limited public information available<br>
+                        <strong>Company Efforts:</strong> General sustainability commitments mentioned
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="performance-badge new-badge">Verified Efficient</div>
+                    <div class="model-name">GPT-4.1 nano</div>
+                    <div class="sustainability-rating leaves-2">🌱🌱 2 leaves</div>
+                    <div class="model-details">
+                        <strong>Energy Consumption:</strong> 0.454 Wh for long prompts<br>
+                        <strong>Carbon Impact:</strong> <0.3g CO₂ per query<br>
+                        <strong>Efficiency:</strong> 70x more efficient than heavy models<br>
+                        <strong>Verification:</strong> Independent benchmark confirmed
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-question">
+                <h3>Question 2: Which model would you be more likely to use?</h3>
+                <div class="radio-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option1" name="q2" value="claude4">
+                        <label for="q2_option1">Claude 4 Sonnet - Popular Choice</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option2" name="q2" value="gpt4nano">
+                        <label for="q2_option2">GPT-4.1 nano - Verified Efficient</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario 3 - Question 3 (3 options) -->
+        <div class="scenario">
+            <h2>Information Detail Preferences</h2>
+            
+            <div class="info-level">
+                <div class="level-label">Minimal Info</div>
+                <div class="model-name">Mistral Large</div>
+                <div class="sustainability-rating leaves-3">🌱🌱🌱 3 leaves</div>
+                <div class="model-details">Comprehensive sustainability metrics published and verified</div>
+            </div>
+
+            <div class="info-level">
+                <div class="level-label">Summary Data</div>
+                <div class="model-name">Mistral Large</div>
+                <div class="sustainability-rating leaves-3">🌱🌱🌱 3 leaves</div>
+                <div class="model-details">
+                    <strong>Training Impact:</strong> 20.4 kilotons CO₂<br>
+                    <strong>Per Query:</strong> 1.14g CO₂, 45ml water<br>
+                    <strong>Verification:</strong> Peer-reviewed lifecycle analysis
+                </div>
+            </div>
+
+            <div class="info-level">
+                <div class="level-label">Complete Transparency</div>
+                <div class="model-name">Mistral Large</div>
+                <div class="sustainability-rating leaves-3">🌱🌱🌱 3 leaves</div>
+                <div class="model-details">
+                    <strong>Training Environmental Impact:</strong><br>
+                    • 20.4 kilotons CO₂-equivalent emissions<br>
+                    • 281,000 m³ water consumption<br>
+                    • 660 kg antimony-equivalent resource depletion<br><br>
+                    
+                    <strong>Per-Query Impact (400 tokens):</strong><br>
+                    • 1.14 grams CO₂-equivalent<br>
+                    • 45 milliliters water usage<br>
+                    • 0.16 mg Sb-equivalent resource impact
+                </div>
+            </div>
+            
+            <div class="form-question">
+                <h3>Question 3: Which level of information detail do you prefer?</h3>
+                <div class="radio-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option1" name="q3" value="minimal">
+                        <label for="q3_option1">Minimal Info</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option2" name="q3" value="summary">
+                        <label for="q3_option2">Summary Data</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option3" name="q3" value="complete">
+                        <label for="q3_option3">Complete Transparency</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario 4 - Question 4 (2 options) -->
+        <div class="scenario">
+            <h2>Budget-Friendly vs. Sustainable Options</h2>
+            
+            <div class="model-comparison">
+                <div class="model-card">
+                    <div class="performance-badge">Cost-Effective</div>
+                    <div class="model-name">GPT-3.5</div>
+                    <div class="sustainability-rating leaves-2">🌱🌱 2 leaves</div>
+                    <div class="model-details">
+                        <strong>Annual Consumption:</strong> ~44,200 MWh per year<br>
+                        <strong>Equivalent Impact:</strong> 4,150 U.S. households' electricity use<br>
+                        <strong>Per Query:</strong> ~10x more energy than a Google search<br>
+                        <strong>Training Impact:</strong> 552 metric tons CO₂ (GPT-3 base)
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="performance-badge new-badge">Next-Gen Efficiency</div>
+                    <div class="model-name">Claude 3.7 Sonnet</div>
+                    <div class="sustainability-rating leaves-3">🌱🌱🌱 3 leaves</div>
+                    <div class="model-details">
+                        <strong>Per Query Consumption:</strong> <br> 
+                        Short prompts (300 tokens): 0.836 Wh <br>
+                        Medium prompts (1,000 tokens): 2.781 Wh<br>
+                        Long prompts (1,500 tokens): 5.518 Wh<br>
+                        <strong>Energy Impact:</strong> Ranked highest eco-efficiency among all 30 models tested.<br>
+                        <strong>Best for:</strong> Efficiency while maintaining performance
+                    </div>      
+                </div>
+            </div>
+            
+            <div class="form-question">
+                <h3>Question 4: Which factor is more important to you?</h3>
+                <div class="radio-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q4_option1" name="q4" value="cost">
+                        <label for="q4_option1">Cost-Effectiveness</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q4_option2" name="q4" value="sustainability">
+                        <label for="q4_option2">Sustainability & Efficiency</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario 5 - Question 5 (3 options) -->
+        <div class="scenario">
+            <h2>Specialized vs. General Purpose Models</h2>
+            
+            <div class="model-comparison">
+                <div class="model-card">
+                    <div class="performance-badge">Specialized</div>
+                    <div class="model-name">Llama 3.2-1B</div>
+                    <div class="sustainability-rating leaves-2">🌱🌱 2 leaves</div>
+                    <div class="model-details">
+                        <strong>Model Size:</strong> Lightweight, 1 billion parameters<br>
+                        <strong>Training:</strong> 370k GPU hours, 240 tons CO₂eq<br>
+                        <strong>Net Emissions:</strong> 0 tons (renewable energy)<br>
+                        <strong>Best for:</strong> Simple tasks, mobile deployment
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="performance-badge">Versatile</div>
+                    <div class="model-name">GPT-4o</div>
+                    <div class="sustainability-rating leaves-2">🌱🌱 2 leaves</div>
+                    <div class="model-details">
+                        <strong>Per Query:</strong> 0.43 Wh for short queries<br>
+                        <strong>Annual Scale:</strong> Equivalent to 35,000 U.S. homes<br>
+                        <strong>Water Usage:</strong> 1.2M people's yearly drinking water<br>
+                        <strong>Carbon Offset:</strong> Requires Chicago-sized forest
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="performance-badge">Ultra-Efficient</div>
+                    <div class="model-name">GPT-4o mini</div>
+                    <div class="sustainability-rating leaves-3">🌱🌱🌱 3 leaves</div>
+                    <div class="model-details">
+                        <strong>Per Query:</strong> ~0.032 Wh (estimated)<br>
+                        <strong>Efficiency:</strong> Significantly lower than GPT-4o<br>
+                        <strong>Data Quality:</strong> Independent study, not peer-reviewed<br>
+                        <strong>Best for:</strong> High-volume, simple tasks
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-question">
+                <h3>Question 5: Which type of model would you prefer to use?</h3>
+                <div class="radio-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q5_option1" name="q5" value="specialized">
+                        <label for="q5_option1">Specialized (Llama 3.2-1B)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q5_option2" name="q5" value="versatile">
+                        <label for="q5_option2">Versatile (GPT-4o)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q5_option3" name="q5" value="efficient">
+                        <label for="q5_option3">Ultra-Efficient (GPT-4o mini)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 6: ASURITE ID -->
+        <div class="feedback-form">
+            <h2>Submit Your Feedback</h2>
+            
+            <div class="form-question">
+                <h3>Question 6: Please enter your ASURITE ID</h3>
+                <input type="text" id="asurite-input" class="asurite-input" placeholder="Enter your ASURITE ID" required>
+            </div>
+            
+            <button type="submit" id="submit-button" class="submit-btn" onclick="submitForm()">Submit Feedback</button>
+            <div id="feedback-message" class="feedback-message"></div>
+        </div>
+        
+        <!-- Hidden form for submission -->
+        <form id="google-form" style="display: none;" method="POST" target="_blank">
+            <!-- Will be populated via JavaScript -->
+        </form>
+    </div>
+
+    <script>
+        // Configuration for the Google Form
+        const formConfig = {
+            formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScy9IPKZwrlJRE2VStcyQhZfJxQE-10oVrJyV6y1OPh-Pfirw/formResponse", 
+            fields: {
+                q1: "entry.362548823",
+                q2: "entry.704231267",
+                q3: "entry.1177052475", 
+                q4: "entry.1960760649",
+                q5: "entry.1145567293",
+                asurite: "entry.350607834"
+            }
+        };
+
+        // Function to submit the form
+        function submitForm() {
+            // Get all form values
+            const formData = {
+                q1: document.querySelector('input[name="q1"]:checked')?.value,
+                q2: document.querySelector('input[name="q2"]:checked')?.value,
+                q3: document.querySelector('input[name="q3"]:checked')?.value,
+                q4: document.querySelector('input[name="q4"]:checked')?.value,
+                q5: document.querySelector('input[name="q5"]:checked')?.value,
+                asurite: document.getElementById('asurite-input').value.trim()
+            };
+            
+            // Validate form
+            const missingFields = [];
+            for (const [key, value] of Object.entries(formData)) {
+                if (!value) {
+                    if (key === 'asurite') {
+                        missingFields.push('ASURITE ID');
+                    } else {
+                        missingFields.push(`Question ${key.substring(1)}`);
+                    }
+                }
+            }
+            
+            if (missingFields.length > 0) {
+                showFeedback(`Please complete the following: ${missingFields.join(', ')}`, false);
+                return;
+            }
+            
+            // Prepare the Google Form submission
+            const googleForm = document.getElementById('google-form');
+            googleForm.action = formConfig.formUrl;
+            googleForm.innerHTML = '';
+            
+            // Add form fields
+            for (const [key, value] of Object.entries(formData)) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = formConfig.fields[key];
+                input.value = value;
+                googleForm.appendChild(input);
+            }
+            
+            // Submit the form
+            try {
+                googleForm.submit();
+                showFeedback("Thank you for your feedback! Your responses have been submitted.", true);
+                
+                // Scroll to feedback message
+                document.getElementById('feedback-message').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                showFeedback("There was an error submitting your feedback. Please try again.", false);
+                console.error("Form submission error:", error);
+            }
+        }
+        
+        // Show feedback message
+        function showFeedback(message, isSuccess) {
+            const feedbackElement = document.getElementById('feedback-message');
+            feedbackElement.textContent = message;
+            feedbackElement.style.display = 'block';
+            feedbackElement.className = 'feedback-message ' + (isSuccess ? 'success' : 'error');
+            
+            // If success, clear form inputs
+            if (isSuccess) {
+                document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                });
+                document.getElementById('asurite-input').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
