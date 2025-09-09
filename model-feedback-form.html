@@ -527,12 +527,12 @@
         const formConfig = {
             formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScy9IPKZwrlJRE2VStcyQhZfJxQE-10oVrJyV6y1OPh-Pfirw/formResponse", 
             fields: {
-                q1: "entry.362548823",
-                q2: "entry.704231267",
-                q3: "entry.1177052475", 
-                q4: "entry.1960760649",
-                q5: "entry.1145567293",
-                asurite: "entry.350607834"
+                decision1: "entry.362548823",
+                decision2: "entry.704231267",
+                decision3: "entry.1177052475", 
+                decision4: "entry.1960760649",
+                decision5: "entry.1145567293",
+                asuriteId: "entry.350607834"
             }
         };
 
@@ -540,22 +540,22 @@
         function submitForm() {
             // Get all form values
             const formData = {
-                q1: document.querySelector('input[name="q1"]:checked')?.value,
-                q2: document.querySelector('input[name="q2"]:checked')?.value,
-                q3: document.querySelector('input[name="q3"]:checked')?.value,
-                q4: document.querySelector('input[name="q4"]:checked')?.value,
-                q5: document.querySelector('input[name="q5"]:checked')?.value,
-                asurite: document.getElementById('asurite-input').value.trim()
+                decision1: document.querySelector('input[name="q1"]:checked')?.value,
+                decision2: document.querySelector('input[name="q2"]:checked')?.value,
+                decision3: document.querySelector('input[name="q3"]:checked')?.value,
+                decision4: document.querySelector('input[name="q4"]:checked')?.value,
+                decision5: document.querySelector('input[name="q5"]:checked')?.value,
+                asuriteId: document.getElementById('asurite-input').value.trim()
             };
             
             // Validate form
             const missingFields = [];
             for (const [key, value] of Object.entries(formData)) {
                 if (!value) {
-                    if (key === 'asurite') {
+                    if (key === 'asuriteId') {
                         missingFields.push('ASURITE ID');
-                    } else {
-                        missingFields.push(`Question ${key.substring(1)}`);
+                    } else if (key.startsWith('decision')) {
+                        missingFields.push(`Question ${key.replace('decision', '')}`);
                     }
                 }
             }
